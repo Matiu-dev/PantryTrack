@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -49,4 +50,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //barcode
+//    implementation("com.journeyapps:zxing-android-embedded:3.0.2@aar")
+    implementation(libs.core)
+    implementation(libs.zxing.android.embedded)
+
+
 }
