@@ -17,15 +17,24 @@ class FirstFragmentViewModel: ViewModel() {
     private var _productList = MutableStateFlow<List<Product>?>(emptyList())
     val productList = _productList.asStateFlow()
 
+    init {
+        Log.d("products", "products view model init")
+        _productList.value = _productList.value?.plus(
+            listOf(
+                Product("1", 11.1, 1),
+                Product("2", 22.2, 2),
+                Product("3", 33.3, 3),
+            )
+        )
+    }
 
     fun addProduct(product: Product) {
-        Log.d("products", "adding new product ${_productList.value?.size}")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 delay(3000)
-                val currentList = _productList.value ?: emptyList()
-                val updatedList = currentList + product
-                _productList.value = updatedList
+                _productList.value = _productList.value?.plus(
+                    product
+                )
             }
         }
     }
