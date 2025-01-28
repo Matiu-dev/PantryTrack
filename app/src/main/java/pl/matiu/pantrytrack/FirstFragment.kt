@@ -49,7 +49,7 @@ class FirstFragment : Fragment() {
 
         if(args.eanCode.isNotEmpty()) {
             Toast.makeText(requireContext(), args.eanCode, Toast.LENGTH_SHORT).show()
-            productViewModel.addProduct(Product(args.eanCode, 11.1, 11))
+            productViewModel.addProduct(Product(args.eanCode, args.price.toDouble(), args.amount.toInt()))
         }
 
         selectListeners()

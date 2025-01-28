@@ -1,10 +1,8 @@
 package pl.matiu.pantrytrack.scanner
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +19,6 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.databinding.FragmentBarCodeBinding
-import pl.matiu.pantrytrack.viewModel.FirstFragmentViewModel
 
 class BarCodeFragment : Fragment() {
 
@@ -88,7 +85,13 @@ class BarCodeFragment : Fragment() {
                     }
                     is BarCodeDialogResult.Success -> {
                         barCodeDialogViewModel.setDialogResult(result = BarCodeDialogResult.Start)
-                        navigator.navigate(BarCodeFragmentDirections.toFirstFragmentPage(eanCode = status.name))
+                        navigator.navigate(
+                            BarCodeFragmentDirections.toFirstFragmentPage(
+                                eanCode = status.product.name,
+                                amount = status.product.amount.toString(),
+                                price = status.product.price.toString()
+                            )
+                        )
 
                         Toast.makeText(requireContext(), "Dialog accepted", Toast.LENGTH_SHORT).show()
                     }

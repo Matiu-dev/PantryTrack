@@ -28,6 +28,6 @@ class ProductAdapter(private var products: List<Product>?) : RecyclerView.Adapte
     override fun getItemCount() = products?.size ?: 0
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.productName.text = products?.get(position)?.name ?: ""
+        viewHolder.productName.text = "Name: ${products?.get(position)?.name}, amount: ${products?.get(position)?.amount}, price: ${products?.get(position)?.price}"
     }
 }

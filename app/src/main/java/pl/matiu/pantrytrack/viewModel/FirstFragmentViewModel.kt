@@ -32,9 +32,7 @@ class FirstFragmentViewModel: ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 delay(3000)
-                _productList.value = _productList.value?.plus(
-                    product
-                )
+                _productList.value = _productList.value?.plus(product)
             }
         }
     }

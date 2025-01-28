@@ -2,11 +2,14 @@ package pl.matiu.pantrytrack.scanner
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import pl.matiu.pantrytrack.model.Product
 
 class BarCodeDialogFragment(val name: String): DialogFragment() {
 
@@ -16,14 +19,35 @@ class BarCodeDialogFragment(val name: String): DialogFragment() {
         barCodeDialogViewModel = ViewModelProvider(requireActivity())[(BarCodeDialogViewModel::class.java)]
 
         return activity?.let {
+            val amountTextView = TextView(it)
+            amountTextView.text = "Amount"
+            val priceTextView = TextView(it)
+            priceTextView.text = "Price"
 
-            val editText = EditText(it)
+            val amountEditText = EditText(it)
+            val priceEditText = EditText(it)
+
+            val layout = LinearLayout(it)
+            layout.orientation = LinearLayout.VERTICAL
+            layout.addView(amountTextView)
+            layout.addView(amountEditText)
+            layout.addView(priceTextView)
+            layout.addView(priceEditText)
 
             val builder = AlertDialog.Builder(it)
             builder.setMessage("Czy chcesz dodać ten produkt?")
-                .setView(editText)
+                .setView(layout)
+
                 .setPositiveButton("Dodaj") { dialog, id ->
-                    barCodeDialogViewModel.setDialogResult(BarCodeDialogResult.Success(name = name))
+                    barCodeDialogViewModel.setDialogResult(
+                        BarCodeDialogResult.Success(
+                            Product(
+                                name = name,
+                                amount = amountEditText.text.toString().toInt(),
+                                price = priceEditText.text.toString().toDouble()
+                            )
+                        )
+                    )
                 }
                 .setNegativeButton("Anuluj") { dialog, id ->
                     barCodeDialogViewModel.setDialogResult(BarCodeDialogResult.Cancelled)
