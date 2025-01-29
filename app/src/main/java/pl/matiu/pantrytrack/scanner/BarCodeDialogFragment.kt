@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import pl.matiu.pantrytrack.model.Product
+import pl.matiu.pantrytrack.product.Product
 
 class BarCodeDialogFragment(val name: String): DialogFragment() {
 

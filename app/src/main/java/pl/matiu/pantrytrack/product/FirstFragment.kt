@@ -1,4 +1,4 @@
-package pl.matiu.pantrytrack
+package pl.matiu.pantrytrack.product
 
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +14,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.adapter.ProductAdapter
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
-import pl.matiu.pantrytrack.model.Product
-import pl.matiu.pantrytrack.viewModel.FirstFragmentViewModel
 
 class FirstFragment : Fragment() {
 
@@ -29,6 +28,8 @@ class FirstFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
     private val args: FirstFragmentArgs by navArgs()
+
+    inline val navigator get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,10 +51,21 @@ class FirstFragment : Fragment() {
         if(args.eanCode.isNotEmpty()) {
             Toast.makeText(requireContext(), args.eanCode, Toast.LENGTH_SHORT).show()
             productViewModel.addProduct(Product(args.eanCode, args.price.toDouble(), args.amount.toInt()))
+            resetArgs()
         }
 
         selectListeners()
         selectObservers()
+
+
+    }
+
+    private fun resetArgs() {
+        val currentDestination = navigator.currentDestination?.id
+        if(currentDestination == R.id.FirstFragment) {
+            val action = FirstFragmentDirections.actionFirstFragmentSelf(eanCode = "", amount = "", price = "")
+            navigator.navigate(action)
+        }
     }
 
     private fun selectListeners() {

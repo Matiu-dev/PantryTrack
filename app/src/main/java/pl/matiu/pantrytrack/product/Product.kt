@@ -1,3 +1,3 @@
-package pl.matiu.pantrytrack.model
+package pl.matiu.pantrytrack.product
 
 data class Product(val name: String, val price: Double, val amount: Int)//zjdecie, kod kreskowy...

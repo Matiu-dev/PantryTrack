@@ -1,6 +1,6 @@
 package pl.matiu.pantrytrack.scanner
 
-import pl.matiu.pantrytrack.model.Product
+import pl.matiu.pantrytrack.product.Product
 
 sealed class BarCodeDialogResult {
     data object Start: BarCodeDialogResult()
