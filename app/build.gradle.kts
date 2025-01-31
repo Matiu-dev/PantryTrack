@@ -64,6 +64,8 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt)
     //room
     val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
     //Dagger - Hilt
@@ -72,6 +74,7 @@ dependencies {
 //    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
 
 
 }

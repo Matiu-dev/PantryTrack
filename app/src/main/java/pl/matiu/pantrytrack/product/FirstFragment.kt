@@ -7,29 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.R
-import pl.matiu.pantrytrack.adapter.ProductAdapter
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 
-class FirstFragment : Fragment() {
+@AndroidEntryPoint
+class FirstFragment : Fragment(R.layout.fragment_first) {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var productViewModel: FirstFragmentViewModel
+    private val productViewModel: FirstFragmentViewModel by viewModels()
     private lateinit var adapter: ProductAdapter
     private lateinit var recyclerView: RecyclerView
 
     private val args: FirstFragmentArgs by navArgs()
 
-    inline val navigator get() = findNavController()
+    private inline val navigator get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +43,6 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        productViewModel = ViewModelProvider(requireActivity())[(FirstFragmentViewModel::class.java)]
 
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -56,8 +56,6 @@ class FirstFragment : Fragment() {
 
         selectListeners()
         selectObservers()
-
-
     }
 
     private fun resetArgs() {
@@ -91,3 +89,5 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 }
+
+//        productViewModel = ViewModelProvider(requireActivity())[(FirstFragmentViewModel::class.java)]

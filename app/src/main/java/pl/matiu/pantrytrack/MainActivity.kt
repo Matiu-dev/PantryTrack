@@ -11,8 +11,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import pl.matiu.pantrytrack.databinding.ActivityMainBinding
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

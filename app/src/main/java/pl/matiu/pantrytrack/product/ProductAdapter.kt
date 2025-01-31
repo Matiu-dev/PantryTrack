@@ -1,17 +1,17 @@
-package pl.matiu.pantrytrack.adapter
+package pl.matiu.pantrytrack.product
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import pl.matiu.pantrytrack.product.Product
 import pl.matiu.pantrytrack.R
 
 class ProductAdapter(private var products: List<Product>?) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     fun updateProducts(newProducts: List<Product>) {
         this.products = newProducts
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
