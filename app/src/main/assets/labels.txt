@@ -1,0 +1,3 @@
+0 HomogenizowanyPiatnica
+1 WiejskiPiatnica
+2 SkyrPiatnica

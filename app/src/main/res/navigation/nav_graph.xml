@@ -35,6 +35,10 @@
             app:destination="@id/BarCodeFragment" />
 
         <action
+            android:id="@+id/action_FirstFragment_to_ScannerFragment"
+            app:destination="@id/ScannerFragment" />
+
+        <action
             android:id="@+id/action_FirstFragment_self"
             app:destination="@+id/FirstFragment"
             />
@@ -53,7 +57,7 @@
 
     <fragment
         android:id="@+id/BarCodeFragment"
-        android:name="pl.matiu.pantrytrack.scanner.BarCodeFragment"
+        android:name="pl.matiu.pantrytrack.barcodeScanner.BarCodeFragment"
         android:label="@string/bar_code_fragment"
         tools:layout="@layout/fragment_second">
 
@@ -62,5 +66,19 @@
             app:destination="@id/FirstFragment"
             app:launchSingleTop="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/ScannerFragment"
+        android:name="pl.matiu.pantrytrack.scanner.ProductScannerFragment"
+        android:label="@string/bar_code_fragment"
+        tools:layout="@layout/fragment_product_scanner">
+
+        <action
+            android:id="@+id/toFirstFragmentPage"
+            app:destination="@id/FirstFragment"
+            app:launchSingleTop="true" />
+    </fragment>
+
+
 
 </navigation>

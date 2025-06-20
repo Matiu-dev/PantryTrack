@@ -1,9 +1,8 @@
-package pl.matiu.pantrytrack.scanner
+package pl.matiu.pantrytrack.barcodeScanner
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,14 +42,9 @@ class BarCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         barCodeDialogViewModel = ViewModelProvider(requireActivity())[(BarCodeDialogViewModel::class.java)]
-
         zXingScanner = binding.barCodeView
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
-        } else {
-            startCamera()
-        }
+        checkCamera()
 
         val decoder = DefaultDecoderFactory(
             listOf(
@@ -69,6 +63,14 @@ class BarCodeFragment : Fragment() {
         }
 
         selectObservers()
+    }
+
+    private fun checkCamera() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+        } else {
+            startCamera()
+        }
     }
 
     private fun selectObservers() {

@@ -1,4 +1,4 @@
-package pl.matiu.pantrytrack.scanner
+package pl.matiu.pantrytrack.barcodeScanner
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
