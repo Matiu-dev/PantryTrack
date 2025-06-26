@@ -22,6 +22,7 @@ import pl.matiu.pantrytrack.barcodeScanner.BarCodeDialogResult
 import pl.matiu.pantrytrack.barcodeScanner.BarCodeFragmentDirections
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 import pl.matiu.pantrytrack.databinding.ProductScannerPhotoBinding
+import pl.matiu.pantrytrack.machineLearning.classifyImage
 import pl.matiu.pantrytrack.product.Product
 
 class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
@@ -38,6 +39,8 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
 
         _binding = ProductScannerPhotoBinding.inflate(LayoutInflater.from(context))
         binding.productPhoto.setImageBitmap(myPhoto)
+        //tutaj
+        binding.productNameEditText.setText(classifyImage(myPhoto, requireContext()))
 
         setListeners()
 

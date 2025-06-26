@@ -24,6 +24,7 @@ import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 import pl.matiu.pantrytrack.ProductClassEnum
 import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
+import pl.matiu.pantrytrack.machineLearning.classifyImage
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap
 
 @AndroidEntryPoint
@@ -118,7 +119,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                         it,
                         onItemClick = { product ->
                             binding.imageView.setImageBitmap(byteArrayToBitmap(product.scannedPhoto))
-                            classifyImage(byteArrayToBitmap(product.scannedPhoto))
+                            binding.resultText.text = product.name
                         },
                         deleteItemClick = { product ->
                             productViewModel.deleteScannedProducts(product)
@@ -140,48 +141,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         uri?.let {
             binding.imageView.setImageURI(it)
             val bitmap = binding.imageView.drawable.toBitmap()
-            classifyImage(bitmap)
+            binding.resultText.text = classifyImage(bitmap, context = requireContext())
         }
     }
 
-    private fun classifyImage(bitmap: Bitmap) {
-        val image = TensorImage.fromBitmap(bitmap)
 
-        val classifier = ImageClassifier.createFromFile(context, "model.tflite")
-        val results: List<Classifications> = classifier.classify(image)
-
-
-
-        val topResult = results.firstOrNull()?.categories?.maxByOrNull { it.score }?.index
-
-        var maxScore = 0.0F
-        results.firstOrNull()?.categories?.filter { it.index == topResult}?.map { maxScore= it.score }
-
-        when(topResult ) {
-            ProductClassEnum.HOMOGENIZOWANYPIATNICA.productNumber -> {
-                if(maxScore > 0.9) {
-                    binding.resultText.text = "Rozponany produkt: Homogenizowany Piatnica z dokładnością ${maxScore}"
-                } else {
-                    binding.resultText.text = "Nie rozpoznano, za mała dokładność - ${maxScore}"
-                }
-            }
-
-            ProductClassEnum.SKYRPIATNICA.productNumber -> {
-                if(maxScore > 0.9) {
-                    binding.resultText.text = "Rozponany produkt: SKYR Piatnica z dokładnością ${maxScore}"
-                } else {
-                    binding.resultText.text = "Nie rozpoznano, za mała dokładność - ${maxScore}"
-                }
-            }
-
-            ProductClassEnum.WIEJSKIPIATNICA.productNumber -> {
-                if(maxScore > 0.9) {
-                    binding.resultText.text = "Rozponany produkt: Wiejski Piatnica z dokładnością ${maxScore}"
-                } else {
-                    binding.resultText.text = "Nie rozpoznano, za mała dokładność - ${maxScore}"
-                }
-            }
-
-        }
-    }
 }
