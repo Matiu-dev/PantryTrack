@@ -2,10 +2,11 @@ package pl.matiu.pantrytrack.machineLearning
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.task.vision.classifier.Classifications
 import org.tensorflow.lite.task.vision.classifier.ImageClassifier
-import pl.matiu.pantrytrack.ProductClassEnum
+import pl.matiu.pantrytrack.machineLearning.ProductClassEnum
 
 fun classifyImage(bitmap: Bitmap, context: Context): String {
     val image = TensorImage.fromBitmap(bitmap)
@@ -18,6 +19,8 @@ fun classifyImage(bitmap: Bitmap, context: Context): String {
 
     var maxScore = 0.0F
     results.firstOrNull()?.categories?.filter { it.index == topResult}?.map { maxScore= it.score }
+
+    Log.d("maxScore", "maxScore ${maxScore.toString()}")
 
     when(topResult) {
         ProductClassEnum.HOMOGENIZOWANYPIATNICA.productNumber -> {
@@ -47,5 +50,5 @@ fun classifyImage(bitmap: Bitmap, context: Context): String {
             }
         }
     }
-    return "Nie rozpoznano"
+    return "Nie rozpoznano $maxScore"
 }
