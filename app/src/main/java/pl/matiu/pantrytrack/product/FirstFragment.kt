@@ -25,6 +25,7 @@ import pl.matiu.pantrytrack.machineLearning.ProductClassEnum
 import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage
+import pl.matiu.pantrytrack.machineLearning.classifyImage2
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap
 
 @AndroidEntryPoint
@@ -141,7 +142,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         uri?.let {
             binding.imageView.setImageURI(it)
             val bitmap = binding.imageView.drawable.toBitmap()
-            binding.resultText.text = classifyImage(bitmap, context = requireContext())
+            binding.resultText.text = classifyImage2(bitmap, context = requireContext())
         }
     }
 

@@ -77,6 +77,7 @@ dependencies {
 
     //tensorflow
     implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.3")
+    implementation("org.tensorflow:tensorflow-lite:2.12.0")
 
 
     val camerax_version = "1.2.2"
