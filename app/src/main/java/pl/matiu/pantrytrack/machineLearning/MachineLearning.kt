@@ -65,7 +65,7 @@ fun classifyImage(bitmap: Bitmap, context: Context): String {
 fun classifyImage2(bitmap: Bitmap, context: Context): String {
     val image = TensorImage.fromBitmap(bitmap)
 
-    val classifier = ImageClassifier.createFromFile(context, "model_with_metadata.tflite")
+    val classifier = ImageClassifier.createFromFile(context, "model_with_metadata17.tflite")
     val results: List<Classifications> = classifier.classify(image)
 
 

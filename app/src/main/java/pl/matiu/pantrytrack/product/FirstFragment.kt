@@ -35,8 +35,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     private val binding get() = _binding!!
 
     private val productViewModel: FirstFragmentViewModel by viewModels()
-    private lateinit var adapter: ProductAdapter
-    private lateinit var recyclerView: RecyclerView
+
+//    private lateinit var adapter: ProductAdapter
+//    private lateinit var recyclerView: RecyclerView
 
     private lateinit var scannedProductAdapter: ScannedProductAdapter
     private lateinit var scannedProductRecyclerView: RecyclerView
@@ -56,7 +57,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        scannedProductRecyclerView = binding.recyclerView
+        scannedProductRecyclerView = binding.scannedProductRecyclerView
         scannedProductRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         scannedProductAdapter = ScannedProductAdapter(
             emptyList(),
@@ -64,9 +65,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             deleteItemClick = {}
         )
 
-        recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = ProductAdapter(emptyList())
+//        recyclerView = binding.recyclerView
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        adapter = ProductAdapter(emptyList())
 
         if(args.eanCode.isNotEmpty()) {
             Toast.makeText(requireContext(), args.eanCode, Toast.LENGTH_SHORT).show()
@@ -105,8 +106,8 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             productViewModel.productList.collect { products ->
                 products?.let {
                     Log.d("products", it.toString())
-                    adapter.updateProducts(it)
-                    recyclerView.adapter = adapter
+//                    adapter.updateProducts(it)
+//                    recyclerView.adapter = adapter
                 }
             }
         }
