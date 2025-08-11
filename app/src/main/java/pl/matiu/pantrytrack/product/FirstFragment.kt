@@ -88,14 +88,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
     private fun selectListeners() {
-        binding.buttonBarcodeScanner.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_BarCodeFragment)
-        }
-
-        binding.buttonProductScanner.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_ScannerFragment)
-        }
-
         binding.imageView.setOnClickListener {
             imagePicker.launch("image/*")
         }
@@ -143,7 +135,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         uri?.let {
             binding.imageView.setImageURI(it)
             val bitmap = binding.imageView.drawable.toBitmap()
-            binding.resultText.text = classifyImage2(bitmap, context = requireContext())
+            binding.resultText.text = classifyImage2(bitmap, context = requireContext())?.productName
         }
     }
 

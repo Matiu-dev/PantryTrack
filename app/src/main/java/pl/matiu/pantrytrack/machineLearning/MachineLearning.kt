@@ -62,7 +62,7 @@ fun classifyImage(bitmap: Bitmap, context: Context): String {
     return "Nie rozpoznano $maxScore"
 }
 
-fun classifyImage2(bitmap: Bitmap, context: Context): String {
+fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue? {
     val image = TensorImage.fromBitmap(bitmap)
 
     val classifier = ImageClassifier.createFromFile(context, "model_with_metadata17.tflite")
@@ -79,30 +79,34 @@ fun classifyImage2(bitmap: Bitmap, context: Context): String {
     when(topResult) {
         ProductClassEnum2.HOMOGENIZOWANYPIATNICA.productNumber -> {
             if(maxScore > 0.9) {
-//                binding.resultText.text = "Rozponany produkt: Homogenizowany Piatnica z dokładnością ${maxScore}"
-                return "Homogenizowany Piatnica ${maxScore}"
-            } else {
-//                binding.resultText.text = "Nie rozpoznano, za mała dokładność - ${maxScore}"
+                return ClassificationReturnValue(
+                    productName = "Homogenizowany Piatnica",
+                    classificationValue = maxScore,
+                    productId = 0
+                )
             }
         }
 
         ProductClassEnum2.SKYRPIATNICA.productNumber -> {
             if(maxScore > 0.9) {
-//                binding.resultText.text = "Rozponany produkt: SKYR Piatnica z dokładnością ${maxScore}"
-                return "SKYR Piatnica ${maxScore}"
-            } else {
-//                binding.resultText.text = "Nie rozpoznano, za mała dokładność - ${maxScore}"
+                return ClassificationReturnValue(
+                    productName = "SKYR Piatnica",
+                    classificationValue = maxScore,
+                    productId = 1
+                )
             }
         }
 
         ProductClassEnum2.WIEJSKIPIATNICA.productNumber -> {
             if(maxScore > 0.9) {
-//                binding.resultText.text = "Rozponany produkt: Wiejski Piatnica z dokładnością ${maxScore}"
-                return "Wiejski Piatnica ${maxScore}"
-            } else {
-//                binding.resultText.text = "Nie rozpoznano, za mała dokładność - ${maxScore}"
+                return ClassificationReturnValue(
+                    productName = "Wiejski Piatnica",
+                    classificationValue = maxScore,
+                    productId = 2
+                )
             }
         }
     }
-    return "Nie rozpoznano $maxScore"
+
+    return null
 }

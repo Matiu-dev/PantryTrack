@@ -10,6 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import pl.matiu.pantrytrack.productDatabase.ProductDao
 import pl.matiu.pantrytrack.productDatabase.ProductDatabase
 import pl.matiu.pantrytrack.productDatabase.ProductRepository
+import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsDao
+import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsRepository
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedDao
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedRepository
 import javax.inject.Singleton
@@ -50,5 +52,17 @@ class ProductModule {
     @Singleton
     fun provideProductScannedRepository(productScannedDao: ProductScannedDao): ProductScannedRepository {
         return ProductScannedRepository(productScannedDao)
+    }
+
+    @Provides
+    @Singleton
+    fun productDetailsProductDetailsDao(database: ProductDatabase): ProductDetailsDao {
+        return database.getProductDetailsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductDetailsRepository(productDetailsDao: ProductDetailsDao): ProductDetailsRepository {
+        return ProductDetailsRepository(productDetailsDao)
     }
 }

@@ -1,10 +1,9 @@
-package pl.matiu.pantrytrack.scanner
+package pl.matiu.pantrytrack.scannerFragment
 
 import android.graphics.Bitmap
-import pl.matiu.pantrytrack.product.Product
 
 sealed class ProductScannerDialogResult {
     data object Start: ProductScannerDialogResult()
     data object Cancelled: ProductScannerDialogResult()
-    data class Success(val name: String, val imagePhoto: Bitmap): ProductScannerDialogResult()
+    data class Success(val name: String, val imagePhoto: Bitmap, val productDetailsId: Int): ProductScannerDialogResult()
 }

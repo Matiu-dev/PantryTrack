@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream
 data class ProductScannedEntity(
     @PrimaryKey(autoGenerate = true)
     val productId: Int = 0,
+    val productDetailsId: Int,
     var name: String,
     var scannedPhoto: ByteArray
 )

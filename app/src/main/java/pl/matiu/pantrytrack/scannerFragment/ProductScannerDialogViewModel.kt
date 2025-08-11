@@ -1,4 +1,4 @@
-package pl.matiu.pantrytrack.scanner
+package pl.matiu.pantrytrack.scannerFragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,15 +8,37 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsDao
+import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity
+import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsRepository
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedEntity
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductScannerDialogViewModel @Inject constructor(private val productScannedRepository: ProductScannedRepository): ViewModel() {
+class ProductScannerDialogViewModel @Inject constructor(
+    private val productScannedRepository: ProductScannedRepository,
+    private val productDetailsRepository: ProductDetailsRepository
+): ViewModel() {
 
     private var _dialogResult = MutableStateFlow<ProductScannerDialogResult>(ProductScannerDialogResult.Start)
     val dialogResult = _dialogResult.asStateFlow()
+
+    private var _productDetails = MutableStateFlow<List<ProductDetailsEntity>>(emptyList())
+    val productDetails = _productDetails.asStateFlow()
+
+    init {
+        getProductDetails()
+    }
+
+    private fun getProductDetails() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _productDetails.value = productDetailsRepository.getProductDetails()
+            }
+        }
+    }
+
 
     fun setDialogResult(result: ProductScannerDialogResult) {
         _dialogResult.value = result
@@ -37,4 +59,14 @@ class ProductScannerDialogViewModel @Inject constructor(private val productScann
             }
         }
     }
+
+    suspend fun saveProductDetails(productDetailsEntity: ProductDetailsEntity) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                productDetailsRepository.addProductDetails(productDetailsEntity)
+            }
+        }
+    }
+
+
 }

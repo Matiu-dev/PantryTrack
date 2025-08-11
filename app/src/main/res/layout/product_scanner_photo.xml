@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -37,9 +38,34 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/product_name"
             app:layout_constraintTop_toBottomOf="@+id/product_photo" />
+
+        <TextView
+            android:id="@+id/product_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:text="Szczegóły produktu"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/product_details_spinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/product_details_spinner"
+             />
+
+        <Spinner
+            android:id="@+id/product_details_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/product_details"
+            app:layout_constraintTop_toBottomOf="@+id/product_name_edit_text" />
 
         <Button
             android:id="@+id/accept_button"
@@ -47,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:text="DODAJ"
-            app:layout_constraintTop_toBottomOf="@+id/product_name_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/product_details_spinner"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
@@ -56,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:text="ANULUJ"
-            app:layout_constraintTop_toBottomOf="@+id/product_name_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/product_details_spinner"
             app:layout_constraintEnd_toStartOf="@+id/accept_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
