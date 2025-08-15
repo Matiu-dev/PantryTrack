@@ -3,19 +3,9 @@ package pl.matiu.pantrytrack.machineLearning
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
-import org.tensorflow.lite.Interpreter
-import org.tensorflow.lite.support.common.TensorOperator
-import org.tensorflow.lite.support.common.TensorProcessor
-import org.tensorflow.lite.support.common.ops.NormalizeOp
-import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
-import org.tensorflow.lite.support.image.ops.ResizeOp
-import org.tensorflow.lite.support.image.ops.ResizeOp.ResizeMethod
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import org.tensorflow.lite.task.vision.classifier.Classifications
 import org.tensorflow.lite.task.vision.classifier.ImageClassifier
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 fun classifyImage(bitmap: Bitmap, context: Context): String {
     val image = TensorImage.fromBitmap(bitmap)
@@ -67,7 +57,6 @@ fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue?
 
     val classifier = ImageClassifier.createFromFile(context, "model_with_metadata17.tflite")
     val results: List<Classifications> = classifier.classify(image)
-
 
     val topResult = results.firstOrNull()?.categories?.maxByOrNull { it.score }?.index
 

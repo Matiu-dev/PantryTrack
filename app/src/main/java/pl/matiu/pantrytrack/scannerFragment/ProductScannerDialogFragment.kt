@@ -80,7 +80,18 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
         binding.acceptButton.setOnClickListener {
             dismiss()
             productScannerDialogViewModel.setDialogResult(
-                ProductScannerDialogResult.Success(
+                ProductScannerDialogResult.SuccessAdd(
+                    name = binding.productNameEditText.text.toString(),
+                    imagePhoto = myPhoto,
+                    productDetailsId = binding.productDetailsSpinner.selectedItemPosition
+                )
+            )
+        }
+
+        binding.deleteButton.setOnClickListener {
+            dismiss()
+            productScannerDialogViewModel.setDialogResult(
+                ProductScannerDialogResult.SuccessDelete(
                     name = binding.productNameEditText.text.toString(),
                     imagePhoto = myPhoto,
                     productDetailsId = binding.productDetailsSpinner.selectedItemPosition

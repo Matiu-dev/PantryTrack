@@ -12,7 +12,8 @@ data class ProductScannedEntity(
     val productId: Int = 0,
     val productDetailsId: Int,
     var name: String,
-    var scannedPhoto: ByteArray
+    var scannedPhoto: ByteArray,
+    var amount: Int
 )
 
 fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
@@ -21,9 +22,7 @@ fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
     return stream.toByteArray()
 }
 
-fun byteArrayToBitmap(byteArray: ByteArray): Bitmap {
-    return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-}
+fun byteArrayToBitmap(byteArray: ByteArray): Bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
 fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
     val width = bitmap.width

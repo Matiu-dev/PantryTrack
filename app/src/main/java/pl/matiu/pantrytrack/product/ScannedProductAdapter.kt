@@ -35,7 +35,7 @@ class ScannedProductAdapter(private var products: List<ProductScannedEntity>?,
     override fun getItemCount() = products?.size ?: 0
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.productNameButton.text = "Name: ${products?.get(position)?.name}"
+        viewHolder.productNameButton.text = "Name: ${products?.get(position)?.name}, Amount: ${products?.get(position)?.amount}"
         val product = products?.get(position) ?: return
         viewHolder.productNameButton.setOnClickListener {
             onItemClick(product)

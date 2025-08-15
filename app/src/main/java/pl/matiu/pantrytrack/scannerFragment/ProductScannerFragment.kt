@@ -84,20 +84,49 @@ class ProductScannerFragment : Fragment() {
 
                         Toast.makeText(requireContext(), "Dialog cancelled", Toast.LENGTH_SHORT).show()
                     }
-                    is ProductScannerDialogResult.Success -> {
+                    is ProductScannerDialogResult.SuccessAdd -> {
                         val resized = resizeBitmap(status.imagePhoto, 800, 800)
                         Log.d("BitmapSize", "ByteArray size: ${bitmapToByteArray(resized).size} bytes (${bitmapToByteArray(resized).size / 1024} KB)")
 
-                        productScannerDialogViewModel.saveScannedProduct(productScannedEntity = ProductScannedEntity(
+                        //check if product exist
+                        val productScannedEntity = ProductScannedEntity(
                             name = status.name,
                             productDetailsId = status.productDetailsId,
-                            scannedPhoto = bitmapToByteArray(resized)
-                        ))
+                            scannedPhoto = bitmapToByteArray(resized),
+                            amount = 1
+                        )
+
+
+                        productScannerDialogViewModel.saveScannedProduct(productScannedEntity =
+                            productScannedEntity
+                        )
 
                         productScannerDialogViewModel.setDialogResult(result = ProductScannerDialogResult.Start)
 
                         navigator.navigate(
-                            BarCodeFragmentDirections.toFirstFragmentPage(eanCode = "",))
+                            BarCodeFragmentDirections.toFirstFragmentPage(eanCode = ""))
+
+                        Toast.makeText(requireContext(), "Dialog accepted", Toast.LENGTH_SHORT).show()
+                    }
+                    is ProductScannerDialogResult.SuccessDelete -> {
+                        val resized = resizeBitmap(status.imagePhoto, 800, 800)
+                        Log.d("BitmapSize", "ByteArray size: ${bitmapToByteArray(resized).size} bytes (${bitmapToByteArray(resized).size / 1024} KB)")
+
+                        val productScannedEntity = ProductScannedEntity(
+                            name = status.name,
+                            productDetailsId = status.productDetailsId,
+                            scannedPhoto = bitmapToByteArray(resized),
+                            amount = 1
+                        )
+
+                        productScannerDialogViewModel.deleteScannedProduct(productScannedEntity =
+                            productScannedEntity
+                        )
+
+                        productScannerDialogViewModel.setDialogResult(result = ProductScannerDialogResult.Start)
+
+                        navigator.navigate(
+                            BarCodeFragmentDirections.toFirstFragmentPage(eanCode = ""))
 
                         Toast.makeText(requireContext(), "Dialog accepted", Toast.LENGTH_SHORT).show()
                     }

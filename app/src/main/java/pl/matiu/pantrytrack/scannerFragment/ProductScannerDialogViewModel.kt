@@ -47,7 +47,15 @@ class ProductScannerDialogViewModel @Inject constructor(
     suspend fun saveScannedProduct(productScannedEntity: ProductScannedEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                productScannedRepository.addProduct(productScannedEntity)
+
+                var scannedProduct = checkIfScannedProductExist(productScannedEntity = productScannedEntity)
+
+                if(scannedProduct != null) {
+                    scannedProduct.amount +=1
+                    productScannedRepository.updateProduct(scannedProduct)
+                } else {
+                    productScannedRepository.addProduct(productScannedEntity)
+                }
             }
         }
     }
@@ -55,7 +63,12 @@ class ProductScannerDialogViewModel @Inject constructor(
     suspend fun deleteScannedProduct(productScannedEntity: ProductScannedEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                productScannedRepository.deleteProduct(productScannedEntity)
+                var scannedProduct = checkIfScannedProductExist(productScannedEntity = productScannedEntity)
+
+                if(scannedProduct != null) {
+                    scannedProduct.amount -=1
+                    productScannedRepository.updateProduct(scannedProduct)
+                }
             }
         }
     }
@@ -68,5 +81,7 @@ class ProductScannerDialogViewModel @Inject constructor(
         }
     }
 
-
+    suspend fun checkIfScannedProductExist(productScannedEntity: ProductScannedEntity): ProductScannedEntity? {
+        return productScannedRepository.getProductByName(productScannedName = productScannedEntity.name)
+    }
 }
