@@ -1,0 +1,6 @@
+Docker
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+tensor flow lokalnie
+docker run -it --rm -p 8888:8888 -v "$(pwd)":/tf -w /tf --user root  --name tfjupyter tensorflow/tensorflow:2.15.0-jupyter

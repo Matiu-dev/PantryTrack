@@ -55,7 +55,7 @@ fun classifyImage(bitmap: Bitmap, context: Context): String {
 fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue? {
     val image = TensorImage.fromBitmap(bitmap)
 
-    val classifier = ImageClassifier.createFromFile(context, "model_with_metadata17.tflite")
+    val classifier = ImageClassifier.createFromFile(context, "model_with_metadata_mobile_net_v7.tflite")
     val results: List<Classifications> = classifier.classify(image)
 
     val topResult = results.firstOrNull()?.categories?.maxByOrNull { it.score }?.index
@@ -73,6 +73,12 @@ fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue?
                     classificationValue = maxScore,
                     productId = 0
                 )
+            } else {
+                return ClassificationReturnValue(
+                    productName = "Możliwe: Homogenizowany Piatnica",
+                    classificationValue = maxScore,
+                    productId = 0
+                )
             }
         }
 
@@ -83,6 +89,12 @@ fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue?
                     classificationValue = maxScore,
                     productId = 1
                 )
+            } else {
+                return ClassificationReturnValue(
+                    productName = "Możliwe: SKYR Piatnica",
+                    classificationValue = maxScore,
+                    productId = 1
+                )
             }
         }
 
@@ -90,6 +102,12 @@ fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue?
             if(maxScore > 0.9) {
                 return ClassificationReturnValue(
                     productName = "Wiejski Piatnica",
+                    classificationValue = maxScore,
+                    productId = 2
+                )
+            } else {
+                return ClassificationReturnValue(
+                    productName = "Możliwe: Wiejski Piatnica",
                     classificationValue = maxScore,
                     productId = 2
                 )
