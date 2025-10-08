@@ -27,7 +27,9 @@ class ProductModule {
             appContext,
             ProductDatabase::class.java,
             "Product_DB"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

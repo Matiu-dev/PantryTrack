@@ -36,12 +36,14 @@
         android:layout_rowWeight="1"
         android:gravity="center"
         android:background="@drawable/border">
-        <TextView
+        <Button
             android:id="@+id/breadButton"
             android:text="Pieczywo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,12 +55,14 @@
         android:layout_rowWeight="1"
         android:gravity="center"
         android:background="@drawable/border">
-        <TextView
+        <Button
             android:id="@+id/meatButton"
             android:text="Mięso"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,12 +74,14 @@
         android:layout_rowWeight="1"
         android:gravity="center"
         android:background="@drawable/border">
-        <TextView
+        <Button
             android:id="@+id/fruitButton"
             android:text="Owoce"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,12 +93,14 @@
         android:layout_rowWeight="1"
         android:gravity="center"
         android:background="@drawable/border">
-        <TextView
+        <Button
             android:id="@+id/vegetableButton"
             android:text="Warzywa"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -104,12 +112,14 @@
         android:layout_rowWeight="1"
         android:gravity="center"
         android:background="@drawable/border">
-        <TextView
+        <Button
             android:id="@+id/drinkButton"
             android:text="Napoje"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:gravity="center" />
     </LinearLayout>
 
 </GridLayout>
