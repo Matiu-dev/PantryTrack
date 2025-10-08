@@ -4,3 +4,11 @@ sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
 tensor flow lokalnie
 docker run -it --rm -p 8888:8888 -v "$(pwd)":/tf -w /tf --user root  --name tfjupyter tensorflow/tensorflow:2.15.0-jupyter
+
+
+- Moze nie robienie zdjęć tylko skanowanie - co 5 sekund automatycznie robienie screena
+- Zrobienie ekranu kategorii - dla kazdej kategorii oddzielny model
+
+Wieksza ilosc elementów w modelu
+- podkategorie, kazda podkategoria po 10-15 elementów
+- po zeskanowaniu wyswietlenie kilku produktów z rozpoznaniem na poziomie minimum 5%

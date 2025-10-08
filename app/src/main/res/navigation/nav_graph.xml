@@ -3,13 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/CategoryFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
         android:name="pl.matiu.pantrytrack.product.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
+
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="" />
 
         <argument
             android:name="ean_code"
@@ -79,6 +84,21 @@
             app:launchSingleTop="true" />
     </fragment>
 
+    <fragment
+        android:id="@+id/CategoryFragment"
+        android:name="pl.matiu.pantrytrack.CategoryFragment"
+        android:label="@string/bar_code_fragment"
+        tools:layout="@layout/fragment_category">
+
+        <action
+            android:id="@+id/fromCategoryToFirstFragmentPage"
+            app:destination="@id/FirstFragment"
+            app:launchSingleTop="true" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_ScannerFragment"
+            app:destination="@id/ScannerFragment" />
+    </fragment>
 
 
 </navigation>

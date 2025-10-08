@@ -14,6 +14,7 @@ import pl.matiu.pantrytrack.productDatabase.ProductRepository
 import pl.matiu.pantrytrack.productDatabase.productDetails.Energy
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsRepository
+import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedEntity
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedRepository
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
     init {
         Log.d("products", "products view model init")
         addInitialProducts()
-        addInitialScannedProducts()
+//        addInitialScannedProducts()
         createProductDetails()
     }
 
@@ -47,6 +48,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                     numberOfCarbohydrate = 13.0,
                     numberOfSalt = 0.2,
                     energy = Energy(138, "kcal"),
+                    type = Type.DAIRY,
                 )
 
                 val productDetailsSkyr = ProductDetailsEntity(
@@ -56,6 +58,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                     numberOfCarbohydrate = 10.0,
                     numberOfSalt = 0.06,
                     energy = Energy(78, "kcal"),
+                    type = Type.DAIRY,
                 )
 
                 val productDetailsWiejski = ProductDetailsEntity(
@@ -65,6 +68,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                     numberOfCarbohydrate = 2.0,
                     numberOfSalt = 0.7,
                     energy = Energy(97, "kcal"),
+                    type = Type.DAIRY,
                 )
 
                 productDetailsRepository.deleteAllData()
@@ -107,7 +111,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
         }
     }
 
-    private fun addInitialScannedProducts() {
+     fun addInitialScannedProducts() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
 //                delay(3000)
@@ -115,4 +119,20 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
             }
         }
     }
+
+    fun addInitialScannedProductsByType(type: String) {
+        viewModelScope.launch {
+
+            var scannedProducts =  withContext(Dispatchers.IO) {productScannedRepository.getProducts() }
+            var productDetails =  withContext(Dispatchers.IO) {productDetailsRepository.getProductDetails() }
+
+            val filtered = scannedProducts.filter {
+                val id = it.productDetailsId
+                id in productDetails.indices && productDetails[id].type.toString() == type
+            }
+
+            _scannedProductList.value = filtered
+        }
+    }
+
 }
