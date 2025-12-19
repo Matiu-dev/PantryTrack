@@ -51,8 +51,12 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.action_FirstFragment_to_BarCodeFragment)
                 true
             }
-            R.id.product_scanner -> {
-                navController.navigate(R.id.action_FirstFragment_to_ScannerFragment)
+//            R.id.product_scanner -> {
+//                navController.navigate(R.id.action_FirstFragment_to_ScannerFragment)
+//                true
+//            }
+            R.id.shop_list -> {
+                navController.navigate(R.id.action_FirstFragment_to_ShoppingListFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -6,11 +6,12 @@ import android.util.Log
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.task.vision.classifier.Classifications
 import org.tensorflow.lite.task.vision.classifier.ImageClassifier
+import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 
-fun classifyImage2(bitmap: Bitmap, context: Context): ClassificationReturnValue? {
+fun classifyImage2(bitmap: Bitmap, type: Type, context: Context): ClassificationReturnValue? {
     val image = TensorImage.fromBitmap(bitmap)
 
-    val classifier = ImageClassifier.createFromFile(context, "model_with_metadata_mobile_net_v7.tflite")
+    val classifier = ImageClassifier.createFromFile(context, "${type}.tflite")
     val results: List<Classifications> = classifier.classify(image)
 
     val topResult = results.firstOrNull()?.categories?.maxByOrNull { it.score }?.index

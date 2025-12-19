@@ -8,9 +8,15 @@
         android:title="Barcode scanner"
         app:showAsAction="never" />
 
+<!--    <item-->
+<!--        android:id="@+id/product_scanner"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="Product scanner"-->
+<!--        app:showAsAction="never" />-->
+
     <item
-        android:id="@+id/product_scanner"
+        android:id="@+id/shop_list"
         android:orderInCategory="100"
-        android:title="Product scanner"
+        android:title="Shop list"
         app:showAsAction="never" />
 </menu>

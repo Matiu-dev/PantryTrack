@@ -13,15 +13,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage2
+import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap
 
 @AndroidEntryPoint
@@ -29,7 +33,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
-
     private val productViewModel: FirstFragmentViewModel by viewModels()
 
 //    private lateinit var adapter: ProductAdapter
@@ -52,6 +55,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        requireActivity().title = "test"
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.title = args.type
 
         scannedProductRecyclerView = binding.scannedProductRecyclerView
         scannedProductRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -98,6 +105,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         binding.imageView.setOnClickListener {
             imagePicker.launch("image/*")
         }
+
+        binding.scanButton.setOnClickListener {
+            navigator.navigate(R.id.action_FirstFragment_to_ScannerFragment)
+        }
     }
 
     private fun selectObservers() {
@@ -139,10 +150,16 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
     private val imagePicker = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+
+        val type: Type = when(readFromSharedPrefs(requireContext())) {
+            "DAIRY" -> Type.DAIRY
+            else -> Type.NONE
+        }
+
         uri?.let {
             binding.imageView.setImageURI(it)
             val bitmap = binding.imageView.drawable.toBitmap()
-            binding.resultText.text = classifyImage2(bitmap, context = requireContext())?.productName
+            binding.resultText.text = classifyImage2(bitmap, type = type, context = requireContext())?.productName
         }
     }
 

@@ -44,6 +44,10 @@
             app:destination="@id/ScannerFragment" />
 
         <action
+            android:id="@+id/action_FirstFragment_to_ShoppingListFragment"
+            app:destination="@id/ShoppingListFragment" />
+
+        <action
             android:id="@+id/action_FirstFragment_self"
             app:destination="@+id/FirstFragment"
             />
@@ -62,7 +66,7 @@
 
     <fragment
         android:id="@+id/BarCodeFragment"
-        android:name="pl.matiu.pantrytrack.barcodeScanner.BarCodeFragment"
+        android:name="pl.matiu.pantrytrack.fragments.barcodeScannerFragment.BarCodeFragment"
         android:label="@string/bar_code_fragment"
         tools:layout="@layout/fragment_second">
 
@@ -74,7 +78,7 @@
 
     <fragment
         android:id="@+id/ScannerFragment"
-        android:name="pl.matiu.pantrytrack.scannerFragment.ProductScannerFragment"
+        android:name="pl.matiu.pantrytrack.fragments.scannerFragment.ProductScannerFragment"
         android:label="@string/bar_code_fragment"
         tools:layout="@layout/fragment_product_scanner">
 
@@ -86,7 +90,7 @@
 
     <fragment
         android:id="@+id/CategoryFragment"
-        android:name="pl.matiu.pantrytrack.CategoryFragment"
+        android:name="pl.matiu.pantrytrack.fragments.categoryFragment.CategoryFragment"
         android:label="@string/bar_code_fragment"
         tools:layout="@layout/fragment_category">
 
@@ -98,6 +102,17 @@
         <action
             android:id="@+id/action_FirstFragment_to_ScannerFragment"
             app:destination="@id/ScannerFragment" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_ShoppingListFragment"
+            app:destination="@id/ShoppingListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ShoppingListFragment"
+        android:name="pl.matiu.pantrytrack.fragments.shoppingListFragment.ShoppingListFragment"
+        android:label="@string/bar_code_fragment"
+        tools:layout="@layout/fragment_shopping_list">
     </fragment>
 
 

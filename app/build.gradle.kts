@@ -80,7 +80,7 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite:2.12.0")
 
 
-    val camerax_version = "1.2.2"
+    val camerax_version = "1.5.2"
     implementation("androidx.camera:camera-core:${camerax_version}")
     implementation("androidx.camera:camera-camera2:${camerax_version}")
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
