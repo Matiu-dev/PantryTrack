@@ -16,6 +16,7 @@ import pl.matiu.pantrytrack.databinding.ProductScannerPhotoBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage2
 import pl.matiu.pantrytrack.product.FirstFragment
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
+import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
 
 class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
 
@@ -27,7 +28,7 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val type: Type = when(FirstFragment().readFromSharedPrefs(requireContext())) {
+        val type: Type = when(SharedPrefs().readType(requireContext())) {
             "DAIRY" -> Type.DAIRY
             else -> Type.NONE
         }

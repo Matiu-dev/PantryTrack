@@ -49,7 +49,9 @@ class CategoryFragment : Fragment() {
 
         categoryRecyclerView = binding.categoryRecyclerView
         categoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        categoryAdapter = CategoryAdapter(categories = emptyList(), navController = navigator, context = requireContext())
+        categoryAdapter = CategoryAdapter(categories = emptyList()) { categoryClicked ->
+            categoryViewModel.onCategoryClicked(categoryName = categoryClicked, context = requireContext(), navController = navigator)
+        }
 
         selectListeners()
         setupObservers()
@@ -58,7 +60,9 @@ class CategoryFragment : Fragment() {
     private fun setupObservers() {
         lifecycleScope.launch {
             categoryViewModel.category.collect { categories ->
-                val categoriesAdapter = CategoryAdapter(categories, navigator, context = requireContext())
+                val categoriesAdapter = CategoryAdapter(categories = categories) { categoryClicked ->
+                    categoryViewModel.onCategoryClicked(categoryName = categoryClicked, context = requireContext(), navController = navigator)
+                }
                 categoryRecyclerView.adapter = categoriesAdapter
             }
         }
@@ -69,30 +73,6 @@ class CategoryFragment : Fragment() {
         binding.addCategoryButton.setOnClickListener {
             showDialog()
         }
-
-//        binding.dairyButton.setOnClickListener {
-//            navigator.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.DAIRY.toString()))
-//        }
-
-//        binding.breadButton.setOnClickListener {
-//            navigator.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.BREAD.toString()))
-//        }
-//
-//        binding.meatButton.setOnClickListener {
-//            navigator.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.MEAT.toString()))
-//        }
-//
-//        binding.fruitButton.setOnClickListener {
-//            navigator.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.FRUIT.toString()))
-//        }
-//
-//        binding.vegetableButton.setOnClickListener {
-//            navigator.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.VEGETABLE.toString()))
-//        }
-//
-//        binding.drinkButton.setOnClickListener {
-//            navigator.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.DRINK.toString()))
-//        }
     }
 
     private fun showDialog() {

@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import pl.matiu.pantrytrack.api.ApiRepository
+import pl.matiu.pantrytrack.api.MyApi
 import pl.matiu.pantrytrack.productDatabase.ProductDao
 import pl.matiu.pantrytrack.productDatabase.ProductDatabase
 import pl.matiu.pantrytrack.productDatabase.ProductRepository
@@ -16,6 +18,7 @@ import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsDao
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsRepository
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedDao
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedRepository
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -80,5 +83,25 @@ class ProductModule {
     @Singleton
     fun provideCategoryRepository(categoryDao: CategoryDao): CategoryRepository {
         return CategoryRepository(categoryDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(): Retrofit {
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl("http://192.168.100.4:8081").build()
+
+        return retrofit
+    }
+
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit): MyApi {
+        return retrofit.create(MyApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideApiRepository(myApi: MyApi, @ApplicationContext context: Context): ApiRepository {
+        return ApiRepository(myApi, context)
     }
 }

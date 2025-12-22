@@ -9,12 +9,15 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import pl.matiu.pantrytrack.R
+import pl.matiu.pantrytrack.api.ApiRepository
 import pl.matiu.pantrytrack.productDatabase.category.CategoryEntity
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
+import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
+import javax.inject.Inject
+import kotlin.math.PI
 
 class CategoryAdapter(private var categories: List<CategoryEntity>?,
-                      private var navController: NavController,
-                      private val context: Context
+                      private val onCategoryClick: (String) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     fun updateCategories(newCategories: List<CategoryEntity>) {
@@ -39,10 +42,17 @@ class CategoryAdapter(private var categories: List<CategoryEntity>?,
         viewHolder.categoryName.text = "Kategoria: ${categories?.get(position)?.categoryName}"
 
         viewHolder.categoryName.setOnClickListener {
-            when(categories?.get(position)?.categoryName) {
-                Type.DAIRY.toString() -> navController.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.DAIRY.toString()))
-                else -> Toast.makeText(context, "Nie ma modelu dla tej kategorii", Toast.LENGTH_SHORT).show()
+            //jesli istnieje taki model
+            categories?.get(position)?.categoryName?.let { modelName ->
+                onCategoryClick(modelName)
             }
+
+//            SharedPrefs().saveType()
+//            categories?.get(position)?.categoryName
+//            when(categories?.get(position)?.categoryName) {
+//                Type.DAIRY.toString() -> navController.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(type = Type.DAIRY.toString()))
+//                else -> Toast.makeText(context, "Nie ma modelu dla tej kategorii", Toast.LENGTH_SHORT).show()
+//            }
         }
     }
 }

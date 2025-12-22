@@ -27,6 +27,7 @@ import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage2
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap
+import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
 
 @AndroidEntryPoint
 class FirstFragment : Fragment(R.layout.fragment_first) {
@@ -79,11 +80,11 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         }
 
         if(args.type != "") {
-            activity?.let { saveToSharedPrefs(it.applicationContext, args.type) }
+            activity?.let { SharedPrefs().saveType(it.applicationContext, args.type) }
             productViewModel.addInitialScannedProductsByType(args.type)
         } else {
             activity?.let {
-                readFromSharedPrefs(it.applicationContext)?.let { type ->
+                SharedPrefs().readType(it.applicationContext)?.let { type ->
                     productViewModel.addInitialScannedProductsByType(type)
                 }
             }
@@ -151,7 +152,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
     private val imagePicker = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
 
-        val type: Type = when(readFromSharedPrefs(requireContext())) {
+        val type: Type = when(SharedPrefs().readType(requireContext())) {
             "DAIRY" -> Type.DAIRY
             else -> Type.NONE
         }
@@ -163,14 +164,14 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         }
     }
 
-    fun saveToSharedPrefs(context: Context, type: String) {
-        val prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
-        prefs.edit().putString("type", type).apply()
-    }
+//    fun saveToSharedPrefs(context: Context, type: String) {
+//        val prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
+//        prefs.edit().putString("type", type).apply()
+//    }
 
-    fun readFromSharedPrefs(context: Context): String? {
-        val prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
-        return prefs.getString("type", null)
-    }
+//    fun readFromSharedPrefs(context: Context): String? {
+//        val prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
+//        return prefs.getString("type", null)
+//    }
 
 }
