@@ -29,16 +29,13 @@ class ApiRepository @Inject constructor(private val myApi: MyApi, private val co
         }
     }
 
-    fun readModel(modelName: String): Boolean {
+    fun readModel(modelName: String): File? {
         val file = File(context.filesDir, "$modelName.tflite")
 
-        if(file.exists()) {
-            //zapis do shared prefs
-            return true
+        if(!file.exists()) {
+            return null
         }
 
-        return false
+        return file
     }
-
-
 }

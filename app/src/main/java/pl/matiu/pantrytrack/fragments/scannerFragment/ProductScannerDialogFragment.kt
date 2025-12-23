@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
@@ -17,6 +18,7 @@ import pl.matiu.pantrytrack.machineLearning.classifyImage2
 import pl.matiu.pantrytrack.product.FirstFragment
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
+import java.io.File
 
 class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
 
@@ -28,17 +30,11 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val type: Type = when(SharedPrefs().readType(requireContext())) {
-            "DAIRY" -> Type.DAIRY
-            else -> Type.NONE
-        }
-
         productScannerDialogViewModel =
             ViewModelProvider(requireActivity())[(ProductScannerDialogViewModel::class.java)]
 
         _binding = ProductScannerPhotoBinding.inflate(LayoutInflater.from(context))
         binding.productPhoto.setImageBitmap(myPhoto)
-        binding.productNameEditText.setText(classifyImage2(myPhoto, type = type, requireContext())?.productName)
 
         val productDetailsAdapter = ArrayAdapter<String>(
             requireContext(),
@@ -48,10 +44,11 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
         binding.productCategorySpinner.adapter = productDetailsAdapter
-        classifyImage2(myPhoto, type = type,requireContext())?.productId?.let {
-            binding.productCategorySpinner.setSelection(it)
-        }
 
+        val type: String = SharedPrefs().readType(requireContext()).toString()
+        binding.productNameEditText.setText(type)
+
+        productScannerDialogViewModel.loadModel(type)
 
         setListeners()
         setObservers(productDetailsAdapter)
@@ -80,6 +77,16 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
                 productDetailsAdapter.addAll(items)
                 productDetailsAdapter.notifyDataSetChanged()
 
+            }
+        }
+
+        lifecycleScope.launch {
+            productScannerDialogViewModel.modelFile.collect { file ->
+                file?.let {
+                    classifyImage2(myPhoto, modelFile = file)?.productId?.let {
+                        binding.productCategorySpinner.setSelection(it)
+                    }
+                }
             }
         }
     }

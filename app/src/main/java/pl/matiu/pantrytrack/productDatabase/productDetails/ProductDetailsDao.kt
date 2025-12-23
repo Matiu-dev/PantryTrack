@@ -18,6 +18,9 @@ interface ProductDetailsDao {
     @Query("DELETE FROM productDetails")
     fun deleteAllData()
 
+    @Query("SELECT productName FROM productDetails WHERE productDetailsId=:productDetailsId")
+    fun getProductNameByProductDetailsId(productDetailsId: Int): String
+
     @Insert
     fun addProductDetails(productDetails: ProductDetailsEntity)
 

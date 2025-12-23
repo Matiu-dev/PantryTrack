@@ -1,8 +1,11 @@
 package pl.matiu.pantrytrack.product
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -10,6 +13,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import pl.matiu.pantrytrack.api.ApiRepository
+import pl.matiu.pantrytrack.fragments.categoryFragment.CategoryFragmentDirections
 import pl.matiu.pantrytrack.productDatabase.ProductRepository
 import pl.matiu.pantrytrack.productDatabase.productDetails.Energy
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity
@@ -17,15 +22,20 @@ import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsReposit
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedEntity
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedRepository
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class FirstFragmentViewModel @Inject constructor(private val productRepository: ProductRepository,
-    private val productScannedRepository: ProductScannedRepository,
-    private val productDetailsRepository: ProductDetailsRepository): ViewModel() {
+                                                 private val productScannedRepository: ProductScannedRepository,
+                                                 private val productDetailsRepository: ProductDetailsRepository,
+                                                 val apiRepository: ApiRepository): ViewModel() {
 
     private var _productList = MutableStateFlow<List<Product>?>(emptyList())
     val productList = _productList.asStateFlow()
+
+    private var _productNameClicked = MutableStateFlow<String?>(null)
+    val productNameClicked = _productNameClicked.asStateFlow()
 
     private var _scannedProductList = MutableStateFlow<List<ProductScannedEntity>?>(emptyList())
     val scannedProductList = _scannedProductList.asStateFlow()
@@ -49,6 +59,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                     numberOfSalt = 0.2,
                     energy = Energy(138, "kcal"),
                     type = Type.DAIRY,
+                    productName = "Homogenizowany"
                 )
 
                 val productDetailsSkyr = ProductDetailsEntity(
@@ -59,6 +70,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                     numberOfSalt = 0.06,
                     energy = Energy(78, "kcal"),
                     type = Type.DAIRY,
+                    productName = "Skyr"
                 )
 
                 val productDetailsWiejski = ProductDetailsEntity(
@@ -69,6 +81,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                     numberOfSalt = 0.7,
                     energy = Energy(97, "kcal"),
                     type = Type.DAIRY,
+                    productName = "Wiejski"
                 )
 
                 productDetailsRepository.deleteAllData()
@@ -124,14 +137,26 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
         viewModelScope.launch {
 
             var scannedProducts =  withContext(Dispatchers.IO) {productScannedRepository.getProducts() }
-            var productDetails =  withContext(Dispatchers.IO) {productDetailsRepository.getProductDetails() }
+//            var productDetails =  withContext(Dispatchers.IO) {productDetailsRepository.getProductDetails() }
 
             val filtered = scannedProducts.filter {
-                val id = it.productDetailsId
-                id in productDetails.indices && productDetails[id].type.toString() == type
+                val categoryName = it.categoryName
+//                id in productDetails.indices && productDetails[id].type.toString() == type
+                categoryName in type
             }
 
             _scannedProductList.value = filtered
+        }
+    }
+
+    fun getModel(categoryName: String): File? {
+        return apiRepository.readModel(modelName = categoryName)
+    }
+
+    fun getProductNameByProductDetailsId(productDetailsId: Int) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _productNameClicked.value = productDetailsRepository.getProductNameByProductDetailsId(detailsId = productDetailsId)
         }
     }
 

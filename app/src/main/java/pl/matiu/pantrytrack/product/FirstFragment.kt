@@ -28,6 +28,7 @@ import pl.matiu.pantrytrack.machineLearning.classifyImage2
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap
 import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
+import java.io.File
 
 @AndroidEntryPoint
 class FirstFragment : Fragment(R.layout.fragment_first) {
@@ -124,6 +125,12 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         }
 
         lifecycleScope.launch {
+            productViewModel.productNameClicked.collect { productName ->
+                binding.resultText.text = productName
+            }
+        }
+
+        lifecycleScope.launch {
             productViewModel.scannedProductList.collect { scannedProduct ->
                 scannedProduct?.let {
                     Log.d("scannedProducts", it.toString())
@@ -132,7 +139,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                         it,
                         onItemClick = { product ->
                             binding.imageView.setImageBitmap(byteArrayToBitmap(product.scannedPhoto))
-                            binding.resultText.text = product.name
+                            productViewModel.getProductNameByProductDetailsId(product.productDetailsId)
                         },
                         deleteItemClick = { product ->
                             productViewModel.deleteScannedProducts(product)
@@ -151,16 +158,15 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
     private val imagePicker = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-
-        val type: Type = when(SharedPrefs().readType(requireContext())) {
-            "DAIRY" -> Type.DAIRY
-            else -> Type.NONE
-        }
+        val type: String = SharedPrefs().readType(requireContext()).toString()
+        val modelFile: File? = productViewModel.getModel("$type.tflite")
 
         uri?.let {
             binding.imageView.setImageURI(it)
             val bitmap = binding.imageView.drawable.toBitmap()
-            binding.resultText.text = classifyImage2(bitmap, type = type, context = requireContext())?.productName
+            modelFile?.let {
+                binding.resultText.text = classifyImage2(bitmap, modelFile = modelFile)?.productName
+            }
         }
     }
 

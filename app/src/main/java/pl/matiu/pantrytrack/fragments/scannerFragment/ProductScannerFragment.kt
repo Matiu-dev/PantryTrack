@@ -90,7 +90,7 @@ class ProductScannerFragment : Fragment() {
 
                         //check if product exist
                         val productScannedEntity = ProductScannedEntity(
-                            name = status.name,
+                            categoryName = status.name,
                             productDetailsId = status.productDetailsId,
                             scannedPhoto = bitmapToByteArray(resized),
                             amount = 1
@@ -113,7 +113,7 @@ class ProductScannerFragment : Fragment() {
                         Log.d("BitmapSize", "ByteArray size: ${bitmapToByteArray(resized).size} bytes (${bitmapToByteArray(resized).size / 1024} KB)")
 
                         val productScannedEntity = ProductScannedEntity(
-                            name = status.name,
+                            categoryName = status.name,
                             productDetailsId = status.productDetailsId,
                             scannedPhoto = bitmapToByteArray(resized),
                             amount = 1

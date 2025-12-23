@@ -13,5 +13,6 @@ data class ProductDetailsEntity (
     val numberOfCarbohydrate: Double,
     val numberOfSalt: Double,
     val energy: Energy,
-    val type: Type
+    val type: Type,
+    val productName: String
 )

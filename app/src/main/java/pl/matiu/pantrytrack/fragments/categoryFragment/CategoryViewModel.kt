@@ -58,7 +58,7 @@ class CategoryViewModel @Inject constructor(
     }
 
     fun onCategoryClicked(categoryName: String, navController: NavController, context: Context) {
-        if(apiRepository.readModel(categoryName)) {
+        if(apiRepository.readModel(categoryName) != null) {
             Toast.makeText(context, "Istnieje model dla tej kategorii", Toast.LENGTH_SHORT).show()
             navController.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(categoryName))
         } else {

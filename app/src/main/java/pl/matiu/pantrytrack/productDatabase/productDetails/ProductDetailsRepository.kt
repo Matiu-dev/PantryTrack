@@ -1,5 +1,6 @@
 package pl.matiu.pantrytrack.productDatabase.productDetails
 
+import android.util.Log
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedDao
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedEntity
 import javax.inject.Inject
@@ -24,6 +25,12 @@ class ProductDetailsRepository @Inject constructor(val productDetailsDao: Produc
 
     suspend fun getProductDetailsByProductName(productId: Int): ProductDetailsEntity {
         return productDetailsDao.getProductDetailsByProductId(productId)
+    }
+
+    suspend fun getProductNameByProductDetailsId(detailsId: Int): String {
+        val test = productDetailsDao.getProductNameByProductDetailsId(productDetailsId = detailsId)
+
+        return test
     }
 
     suspend fun deleteAllData() {
