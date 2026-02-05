@@ -1,8 +1,5 @@
 package pl.matiu.pantrytrack.productDatabase.scannedProductPhoto
 
-import pl.matiu.pantrytrack.product.Product
-import pl.matiu.pantrytrack.productDatabase.toProduct
-import pl.matiu.pantrytrack.productDatabase.toProductEntity
 import javax.inject.Inject
 
 class ProductScannedRepository @Inject constructor(val productScannedDao: ProductScannedDao) {

@@ -1,4 +1,4 @@
-package pl.matiu.pantrytrack.product
+package pl.matiu.pantrytrack.fragments.product
 
 import android.util.Log
 import android.view.LayoutInflater

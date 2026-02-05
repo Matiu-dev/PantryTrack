@@ -1,20 +1,15 @@
-package pl.matiu.pantrytrack.product
+package pl.matiu.pantrytrack.fragments.product
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pl.matiu.pantrytrack.api.ApiRepository
-import pl.matiu.pantrytrack.fragments.categoryFragment.CategoryFragmentDirections
 import pl.matiu.pantrytrack.productDatabase.ProductRepository
 import pl.matiu.pantrytrack.productDatabase.productDetails.Energy
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity

@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import pl.matiu.pantrytrack.product.Product
+import pl.matiu.pantrytrack.fragments.product.Product
 
 class BarCodeDialogFragment(val name: String): DialogFragment() {
 

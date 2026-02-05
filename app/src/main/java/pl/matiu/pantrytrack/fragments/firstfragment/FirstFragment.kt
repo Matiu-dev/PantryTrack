@@ -1,20 +1,16 @@
-package pl.matiu.pantrytrack.product
+package pl.matiu.pantrytrack.fragments.firstfragment
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +21,9 @@ import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage2
-import pl.matiu.pantrytrack.productDatabase.productDetails.Type
+import pl.matiu.pantrytrack.fragments.product.FirstFragmentViewModel
+import pl.matiu.pantrytrack.fragments.product.Product
+import pl.matiu.pantrytrack.fragments.product.ScannedProductAdapter
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap
 import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
 import java.io.File
@@ -76,7 +74,13 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         if(args.eanCode.isNotEmpty()) {
             Toast.makeText(requireContext(), args.eanCode, Toast.LENGTH_SHORT).show()
-            productViewModel.addProduct(Product(args.eanCode, args.price.toDouble(), args.amount.toInt()))
+            productViewModel.addProduct(
+                Product(
+                    args.eanCode,
+                    args.price.toDouble(),
+                    args.amount.toInt()
+                )
+            )
             resetArgs()
         }
 

@@ -1,6 +1,6 @@
 package pl.matiu.pantrytrack.productDatabase
 
-import pl.matiu.pantrytrack.product.Product
+import pl.matiu.pantrytrack.fragments.product.Product
 import javax.inject.Inject
 
 class ProductRepository @Inject constructor(private val productDao: ProductDao) {

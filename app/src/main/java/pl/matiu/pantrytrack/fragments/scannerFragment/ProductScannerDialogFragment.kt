@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.databinding.ProductScannerPhotoBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage2
-import pl.matiu.pantrytrack.product.FirstFragment
+import pl.matiu.pantrytrack.fragments.firstfragment.FirstFragment
 import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 import pl.matiu.pantrytrack.sharedPrefs.SharedPrefs
 import java.io.File

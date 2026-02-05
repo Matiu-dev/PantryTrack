@@ -1,8 +1,6 @@
 package pl.matiu.pantrytrack.fragments.categoryFragment
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.databinding.FragmentCategoryBinding
-import pl.matiu.pantrytrack.fragments.scannerFragment.ProductScannerDialogFragment
-import pl.matiu.pantrytrack.fragments.scannerFragment.ProductScannerDialogViewModel
-import pl.matiu.pantrytrack.product.ScannedProductAdapter
-import pl.matiu.pantrytrack.productDatabase.productDetails.Type
 
 class CategoryFragment : Fragment() {
 

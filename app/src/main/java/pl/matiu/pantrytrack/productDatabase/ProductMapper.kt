@@ -1,6 +1,6 @@
 package pl.matiu.pantrytrack.productDatabase
 
-import pl.matiu.pantrytrack.product.Product
+import pl.matiu.pantrytrack.fragments.product.Product
 
 fun toProductEntity(product: Product): ProductEntity {
     return ProductEntity(
