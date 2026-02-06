@@ -47,14 +47,14 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.barcode_scanner -> {
-                navController.navigate(R.id.action_FirstFragment_to_BarCodeFragment)
-                true
-            }
-//            R.id.product_scanner -> {
-//                navController.navigate(R.id.action_FirstFragment_to_ScannerFragment)
+//            R.id.barcode_scanner -> {
+//                navController.navigate(R.id.action_FirstFragment_to_BarCodeFragment)
 //                true
 //            }
+            R.id.product_scanner -> {
+                navController.navigate(R.id.action_FirstFragment_to_ScannerFragment)
+                true
+            }
             R.id.shop_list -> {
                 navController.navigate(R.id.action_FirstFragment_to_ShoppingListFragment)
                 true

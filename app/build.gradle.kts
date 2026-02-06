@@ -31,7 +31,31 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
     }
+
+    flavorDimensions += listOf("version")
+
+    productFlavors {
+        create("local") {
+            dimension = "version"
+            applicationIdSuffix = ".local"
+            versionNameSuffix = "-local"
+            resValue("string", "app_name", "PantryTrackLocal")
+        }
+
+        create("external") {
+            dimension = "version"
+            applicationIdSuffix = ".external"
+            versionNameSuffix = "-external"
+            resValue("string", "app_name", "PantryTrackExternal")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -41,6 +65,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 

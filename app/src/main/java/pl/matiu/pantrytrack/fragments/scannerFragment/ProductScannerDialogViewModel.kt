@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pl.matiu.pantrytrack.api.ApiRepository
+import pl.matiu.pantrytrack.configuration.FlavorConfig
 import pl.matiu.pantrytrack.fragments.categoryFragment.CategoryFragmentDirections
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsRepository
@@ -94,9 +95,16 @@ class ProductScannerDialogViewModel @Inject constructor(
         return productScannedRepository.getProductByName(productScannedName = productScannedEntity.categoryName)
     }
 
-    fun loadModel(modelName: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-                _modelFile.value = apiRepository.readModel(modelName = modelName)
+    fun loadModel(modelName: String, context: Context) {
+        if(FlavorConfig.isLocalServer) {
+            context.assets
         }
+
+        if(FlavorConfig.isExternalServer) {
+            viewModelScope.launch(Dispatchers.IO) {
+                _modelFile.value = apiRepository.readModel(modelName = modelName)
+            }
+        }
+
     }
 }

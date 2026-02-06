@@ -2,17 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pl.matiu.pantrytrack.MainActivity">
-    <item
-        android:id="@+id/barcode_scanner"
-        android:orderInCategory="100"
-        android:title="Barcode scanner"
-        app:showAsAction="never" />
-
 <!--    <item-->
-<!--        android:id="@+id/product_scanner"-->
+<!--        android:id="@+id/barcode_scanner"-->
 <!--        android:orderInCategory="100"-->
-<!--        android:title="Product scanner"-->
+<!--        android:title="Barcode scanner"-->
 <!--        app:showAsAction="never" />-->
+
+    <item
+        android:id="@+id/product_scanner"
+        android:orderInCategory="100"
+        android:title="Product scanner"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/shop_list"

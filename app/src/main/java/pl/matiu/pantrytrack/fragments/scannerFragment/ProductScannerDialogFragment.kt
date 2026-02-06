@@ -48,7 +48,7 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
         val type: String = SharedPrefs().readType(requireContext()).toString()
         binding.productNameEditText.setText(type)
 
-        productScannerDialogViewModel.loadModel(type)
+        productScannerDialogViewModel.loadModel(type, context = requireContext())
 
         setListeners()
         setObservers(productDetailsAdapter)
