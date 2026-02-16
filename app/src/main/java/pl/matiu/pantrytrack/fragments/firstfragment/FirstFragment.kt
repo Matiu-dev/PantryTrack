@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import pl.matiu.pantrytrack.R
 import pl.matiu.pantrytrack.databinding.FragmentFirstBinding
 import pl.matiu.pantrytrack.machineLearning.classifyImage2
-import pl.matiu.pantrytrack.fragments.product.FirstFragmentViewModel
+import pl.matiu.pantrytrack.fragments.firstfragment.FirstFragmentViewModel
 import pl.matiu.pantrytrack.fragments.product.Product
 import pl.matiu.pantrytrack.fragments.product.ScannedProductAdapter
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.byteArrayToBitmap

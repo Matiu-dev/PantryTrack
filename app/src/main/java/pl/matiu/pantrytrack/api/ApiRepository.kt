@@ -7,6 +7,7 @@ import retrofit2.Response
 import java.io.BufferedReader
 import java.io.DataInput
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStreamReader
 import javax.inject.Inject
@@ -21,22 +22,20 @@ class ApiRepository @Inject constructor(private val myApi: MyApi, private val co
         }
     }
 
-    suspend fun downloadModelsLocally(modelName: String) {
-        var reader: BufferedReader ?= null
-        try {
-            reader = BufferedReader(InputStreamReader(context.getAssets().open("${modelName}.tflite")))
-            Log.d("model", reader.toString())
+    fun saveModelLocally(modelName: String): File? {
+        val file = File(context.filesDir, "$modelName.tflite")
 
-        } catch (e: IOException) {
+        if (file.exists()) return file
 
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (e: IOException) {
-
+        return try {
+            context.assets.open(modelName + ".tflite").use { input ->
+                file.outputStream().use { output ->
+                    input.copyTo(output)
                 }
             }
+            file
+        } catch (e: FileNotFoundException) {
+            null
         }
     }
 

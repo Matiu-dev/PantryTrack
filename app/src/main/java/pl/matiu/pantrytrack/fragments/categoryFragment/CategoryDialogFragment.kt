@@ -57,6 +57,7 @@ class CategoryDialogFragment(): DialogFragment() {
         binding.categoryButton.setOnClickListener {
             dismiss()
             categoryViewModel.saveCategories(binding.categoryEditText.text.toString())
+            navigator.navigate( CategoryFragmentDirections.actionCategoryFragmentSelf())
         }
     }
 }

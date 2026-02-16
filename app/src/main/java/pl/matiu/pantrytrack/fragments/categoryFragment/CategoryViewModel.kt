@@ -41,6 +41,10 @@ class CategoryViewModel @Inject constructor(
 
 
     init {
+
+    }
+
+    fun getCategoriesAndModels() {
         viewModelScope.launch(Dispatchers.IO) {
             getCategories()
             getModels(context = context)
@@ -53,12 +57,9 @@ class CategoryViewModel @Inject constructor(
 
     suspend fun getModels(context: Context) {
         if(FlavorConfig.isLocalServer) {
-            Log.d("test", "test")//tutaj pobranie i zapisanie modelu w shared prefs, potem z shared prefs odczytywanie
-
             for (category in _category.value ) {
-                apiRepository.downloadModelsLocally(category.categoryName)
+                apiRepository.saveModelLocally(category.categoryName)
             }
-
         }
 
         if(FlavorConfig.isExternalServer) {
@@ -79,9 +80,13 @@ class CategoryViewModel @Inject constructor(
 
     fun onCategoryClicked(categoryName: String, navController: NavController, context: Context) {
 
-        if(FlavorConfig.isLocalServer) {
-
-            Toast.makeText(context, "${context.assets}", Toast.LENGTH_SHORT).show()
+        if(FlavorConfig.isLocalServer) {//tutaj
+            if(apiRepository.saveModelLocally(categoryName) != null) {
+                Toast.makeText(context, "Istnieje model dla tej kategorii", Toast.LENGTH_SHORT).show()
+                navController.navigate( CategoryFragmentDirections.fromCategoryToFirstFragmentPage(categoryName))
+            } else {
+                Toast.makeText(context, "Nie ma modelu dla tej kategorii", Toast.LENGTH_SHORT).show()
+            }
         }
 
         if(FlavorConfig.isExternalServer) {

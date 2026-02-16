@@ -9,13 +9,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import pl.matiu.pantrytrack.R
+import pl.matiu.pantrytrack.fragments.firstfragment.FirstFragmentProductModel
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedEntity
 
-class ScannedProductAdapter(private var products: List<ProductScannedEntity>?,
-                            private val onItemClick: (ProductScannedEntity) -> Unit,
-                            private val deleteItemClick: (ProductScannedEntity) -> Unit) : RecyclerView.Adapter<ScannedProductAdapter.ViewHolder>() {
+class ScannedProductAdapter(private var products: List<FirstFragmentProductModel>?,
+                            private val onItemClick: (FirstFragmentProductModel) -> Unit,
+                            private val deleteItemClick: (FirstFragmentProductModel) -> Unit) : RecyclerView.Adapter<ScannedProductAdapter.ViewHolder>() {
 
-    fun updateProducts(newProducts: List<ProductScannedEntity>) {
+    fun updateProducts(newProducts: List<FirstFragmentProductModel>) {
         this.products = newProducts
         notifyDataSetChanged()
     }
@@ -35,7 +36,7 @@ class ScannedProductAdapter(private var products: List<ProductScannedEntity>?,
     override fun getItemCount() = products?.size ?: 0
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.productNameButton.text = "Name: ${products?.get(position)?.categoryName}, Amount: ${products?.get(position)?.amount}"
+        viewHolder.productNameButton.text = "Name: ${products?.get(position)?.productName}, Amount: ${products?.get(position)?.amount}"
         val product = products?.get(position) ?: return
         viewHolder.productNameButton.setOnClickListener {
             onItemClick(product)

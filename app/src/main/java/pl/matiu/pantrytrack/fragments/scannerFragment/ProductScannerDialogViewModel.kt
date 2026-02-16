@@ -97,7 +97,9 @@ class ProductScannerDialogViewModel @Inject constructor(
 
     fun loadModel(modelName: String, context: Context) {
         if(FlavorConfig.isLocalServer) {
-            context.assets
+            viewModelScope.launch(Dispatchers.IO) {
+                _modelFile.value = apiRepository.readModel(modelName = modelName)
+            }
         }
 
         if(FlavorConfig.isExternalServer) {

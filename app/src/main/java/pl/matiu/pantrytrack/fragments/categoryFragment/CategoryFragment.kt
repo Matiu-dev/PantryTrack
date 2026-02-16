@@ -41,6 +41,10 @@ class CategoryFragment : Fragment() {
 
         categoryViewModel = ViewModelProvider(requireActivity())[(CategoryViewModel::class.java)]
 
+        lifecycleScope.launch {
+            categoryViewModel.getCategoriesAndModels()
+        }
+
         categoryRecyclerView = binding.categoryRecyclerView
         categoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         categoryAdapter = CategoryAdapter(categories = emptyList()) { categoryClicked ->

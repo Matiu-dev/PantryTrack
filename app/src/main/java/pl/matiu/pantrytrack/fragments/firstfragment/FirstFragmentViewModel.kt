@@ -1,4 +1,4 @@
-package pl.matiu.pantrytrack.fragments.product
+package pl.matiu.pantrytrack.fragments.firstfragment
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pl.matiu.pantrytrack.api.ApiRepository
+import pl.matiu.pantrytrack.fragments.product.Product
 import pl.matiu.pantrytrack.productDatabase.ProductRepository
 import pl.matiu.pantrytrack.productDatabase.productDetails.Energy
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity
@@ -24,7 +25,8 @@ import javax.inject.Inject
 class FirstFragmentViewModel @Inject constructor(private val productRepository: ProductRepository,
                                                  private val productScannedRepository: ProductScannedRepository,
                                                  private val productDetailsRepository: ProductDetailsRepository,
-                                                 val apiRepository: ApiRepository): ViewModel() {
+                                                 val apiRepository: ApiRepository
+): ViewModel() {
 
     private var _productList = MutableStateFlow<List<Product>?>(emptyList())
     val productList = _productList.asStateFlow()
@@ -32,7 +34,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
     private var _productNameClicked = MutableStateFlow<String?>(null)
     val productNameClicked = _productNameClicked.asStateFlow()
 
-    private var _scannedProductList = MutableStateFlow<List<ProductScannedEntity>?>(emptyList())
+    private var _scannedProductList = MutableStateFlow<List<FirstFragmentProductModel>?>(emptyList())
     val scannedProductList = _scannedProductList.asStateFlow()
 
     init {
@@ -109,12 +111,16 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
         }
     }
 
-    fun deleteScannedProducts(productScannedEntity: ProductScannedEntity) {
+    fun deleteScannedProducts(firstFragmentProductModel: FirstFragmentProductModel) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
 //                delay(3000)
-                productScannedRepository.deleteProduct(productScannedEntity)
-                _scannedProductList.value = _scannedProductList.value?.filter { it.productId != productScannedEntity.productId }
+                val scannedProduct = productScannedRepository.getProductByProductId(firstFragmentProductModel.productId)
+                scannedProduct?.let {
+                    productScannedRepository.deleteProduct(scannedProduct)
+                }
+                _scannedProductList.value =
+                    _scannedProductList.value?.filter { it.productId != scannedProduct?.productId }
             }
         }
     }
@@ -123,7 +129,7 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
 //                delay(3000)
-                _scannedProductList.value = productScannedRepository.getProducts()
+//                _scannedProductList.value = productScannedRepository.getProducts()
             }
         }
     }
@@ -131,16 +137,48 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
     fun addInitialScannedProductsByType(type: String) {
         viewModelScope.launch {
 
-            var scannedProducts =  withContext(Dispatchers.IO) {productScannedRepository.getProducts() }
-//            var productDetails =  withContext(Dispatchers.IO) {productDetailsRepository.getProductDetails() }
+            var scannedProducts =
+                withContext(Dispatchers.IO) {
+                    productScannedRepository.getProducts()
+                }
+            var productDetails =
+                withContext(Dispatchers.IO) {
+                    productDetailsRepository.getProductDetails()
+                }
 
-            val filtered = scannedProducts.filter {
-                val categoryName = it.categoryName
-//                id in productDetails.indices && productDetails[id].type.toString() == type
-                categoryName in type
+//            val filtered = scannedProducts.filter {
+//                val categoryName = it.categoryName
+////                id in productDetails.indices && productDetails[id].type.toString() == type
+//                categoryName in type
+//            }
+
+            val returnList = mutableListOf<FirstFragmentProductModel>()
+
+            for(sP in scannedProducts) {
+                if(sP.categoryName == type) {
+                    var productName: String? = null
+
+                    for(pD in productDetails) {
+                        if(sP.productDetailsId == pD.productDetailsId) {
+                            productName = pD.productName
+                        }
+                    }
+
+                    productName?.let {
+                        returnList.add(
+                            FirstFragmentProductModel(
+                                productName = productName,
+                                amount = sP.amount,
+                                scannedPhoto = sP.scannedPhoto,
+                                productDetailsId = sP.productDetailsId,
+                                productId = sP.productId
+                            )
+                        )
+                    }
+                }
             }
 
-            _scannedProductList.value = filtered
+            _scannedProductList.value = returnList
         }
     }
 
