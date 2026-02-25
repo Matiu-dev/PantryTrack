@@ -46,5 +46,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bar_code_fragment">Bar code fragment</string>
-    <string name="category_fragment">Category fragment</string>
+    <string name="category_fragment_label">Kategorie</string>
+    <string name="scanner_fragment_label">Zrób zdjęcie</string>
+    <string name="shopping_list_fragment_label">Lista zakupów</string>
 </resources>

@@ -20,4 +20,9 @@ class ShoppingListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_shopping_list, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
 }

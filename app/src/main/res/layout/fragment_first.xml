@@ -59,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="50.dp"
             android:text="Skanuj"
+            android:textColor="@color/white"
             android:backgroundTint="@color/gray"
             android:layout_marginTop="25.dp"
             android:layout_marginBottom="25.dp"
