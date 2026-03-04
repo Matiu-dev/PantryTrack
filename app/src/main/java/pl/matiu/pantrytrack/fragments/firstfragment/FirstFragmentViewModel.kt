@@ -168,10 +168,11 @@ class FirstFragmentViewModel @Inject constructor(private val productRepository: 
                         returnList.add(
                             FirstFragmentProductModel(
                                 productName = productName,
-                                amount = sP.amount,
+                                quantity = sP.quantity,
                                 scannedPhoto = sP.scannedPhoto,
                                 productDetailsId = sP.productDetailsId,
-                                productId = sP.productId
+                                productId = sP.productId,
+                                targetQuantity = 0
                             )
                         )
                     }

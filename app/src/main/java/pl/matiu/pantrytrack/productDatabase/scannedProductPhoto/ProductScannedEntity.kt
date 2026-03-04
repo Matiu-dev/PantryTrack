@@ -13,7 +13,8 @@ data class ProductScannedEntity(
     val productDetailsId: Int,
     var categoryName: String,
     var scannedPhoto: ByteArray,
-    var amount: Int
+    var quantity: Int,
+    var targetQuantity: Int
 )
 
 fun bitmapToByteArray(bitmap: Bitmap): ByteArray {

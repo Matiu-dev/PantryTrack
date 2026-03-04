@@ -61,7 +61,8 @@ class ProductScannerDialogViewModel @Inject constructor(
                 var scannedProduct = checkIfScannedProductExist(productScannedEntity = productScannedEntity)
 
                 if(scannedProduct != null) {
-                    scannedProduct.amount +=1
+                    scannedProduct.quantity +=1
+                    scannedProduct.targetQuantity = productScannedEntity.targetQuantity
                     productScannedRepository.updateProduct(scannedProduct)
                 } else {
                     productScannedRepository.addProduct(productScannedEntity)
@@ -76,7 +77,7 @@ class ProductScannerDialogViewModel @Inject constructor(
                 var scannedProduct = checkIfScannedProductExist(productScannedEntity = productScannedEntity)
 
                 if(scannedProduct != null) {
-                    scannedProduct.amount -=1
+                    scannedProduct.quantity -=1
                     productScannedRepository.updateProduct(scannedProduct)
                 }
             }

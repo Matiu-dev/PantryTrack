@@ -98,7 +98,8 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
                 ProductScannerDialogResult.SuccessAdd(
                     name = binding.productNameEditText.text.toString(),
                     imagePhoto = myPhoto,
-                    productDetailsId = binding.productCategorySpinner.selectedItemPosition
+                    productDetailsId = binding.productCategorySpinner.selectedItemPosition,
+                    targetQuantity = Integer.parseInt(binding.productPrefQuantityEditText.text.toString())
                 )
             )
         }

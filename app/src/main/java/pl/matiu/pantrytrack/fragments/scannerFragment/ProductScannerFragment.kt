@@ -93,7 +93,8 @@ class ProductScannerFragment : Fragment() {
                             categoryName = status.name,
                             productDetailsId = status.productDetailsId,
                             scannedPhoto = bitmapToByteArray(resized),
-                            amount = 1
+                            quantity = 1,
+                            targetQuantity = status.targetQuantity
                         )
 
 
@@ -116,7 +117,8 @@ class ProductScannerFragment : Fragment() {
                             categoryName = status.name,
                             productDetailsId = status.productDetailsId,
                             scannedPhoto = bitmapToByteArray(resized),
-                            amount = 1
+                            quantity = 1,
+                            targetQuantity = status.targetQuantity
                         )
 
                         productScannerDialogViewModel.deleteScannedProduct(productScannedEntity =

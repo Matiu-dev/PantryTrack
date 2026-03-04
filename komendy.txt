@@ -12,3 +12,13 @@ docker run -it --rm -p 8888:8888 -v "$(pwd)":/tf -w /tf --user root  --name tfju
 Wieksza ilosc elementów w modelu
 - podkategorie, kazda podkategoria po 10-15 elementów
 - po zeskanowaniu wyswietlenie kilku produktów z rozpoznaniem na poziomie minimum 5%
+
+
+- mozliwosc ustawienia wymaganej ilosci produktów danego typu w lodówce na ekranie danej
+kategorii
+Na przyjkład name Wiejski, Amount 3, wymana ilość 4
+
+Potem na ekranie zakupów wyśiwetli się lista produkótw które wymagaja dokupienia
+Na przykład Serek wiejski ilość 1
+
+Gdzie określamy ilość wymaganej ilości danego produktu?
