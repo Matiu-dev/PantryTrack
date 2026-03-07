@@ -173,15 +173,4 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             }
         }
     }
-
-//    fun saveToSharedPrefs(context: Context, type: String) {
-//        val prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
-//        prefs.edit().putString("type", type).apply()
-//    }
-
-//    fun readFromSharedPrefs(context: Context): String? {
-//        val prefs = context.getSharedPreferences("preferences", Context.MODE_PRIVATE)
-//        return prefs.getString("type", null)
-//    }
-
 }
