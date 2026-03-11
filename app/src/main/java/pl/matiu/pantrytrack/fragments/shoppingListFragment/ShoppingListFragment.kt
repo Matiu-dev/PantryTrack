@@ -42,9 +42,8 @@ class ShoppingListFragment : Fragment() {
 
         shoppingListRecyclerView = binding.scannedProductRecyclerView
         shoppingListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        shoppingListAdapter = ShoppingListAdapter(
-            emptyList(),
-        )
+        shoppingListAdapter = ShoppingListAdapter(emptyList())
+        shoppingListRecyclerView.adapter = shoppingListAdapter
 
         selectObservers()
     }
@@ -52,8 +51,7 @@ class ShoppingListFragment : Fragment() {
     fun selectObservers() {
         lifecycleScope.launch {
             shoppingListViewModel.productList.collect { shoppingList ->
-                val shoppingListAdapter = ShoppingListAdapter(shoppingList)
-                shoppingListRecyclerView.adapter = shoppingListAdapter
+                shoppingListAdapter.updateProducts(shoppingList)
             }
         }
     }

@@ -1,5 +1,6 @@
 package pl.matiu.pantrytrack.fragments.shoppingListFragment
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ class ShoppingListAdapter(private var products: List<FirstFragmentProductModel>?
 
     fun updateProducts(newProducts: List<FirstFragmentProductModel>) {
         this.products = newProducts
-        notifyDataSetChanged()
+        notifyItemInserted(newProducts.size - 1)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

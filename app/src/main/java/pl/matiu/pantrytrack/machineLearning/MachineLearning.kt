@@ -30,13 +30,13 @@ fun classifyImage2(bitmap: Bitmap, modelFile: File): ClassificationReturnValue? 
                 return ClassificationReturnValue(
                     productName = "Homogenizowany Piatnica",
                     classificationValue = maxScore,
-                    productId = 0
+                    productDetailsId = 0
                 )
             } else {
                 return ClassificationReturnValue(
                     productName = "Możliwe: Homogenizowany Piatnica",
                     classificationValue = maxScore,
-                    productId = 0
+                    productDetailsId = 0
                 )
             }
         }
@@ -46,13 +46,13 @@ fun classifyImage2(bitmap: Bitmap, modelFile: File): ClassificationReturnValue? 
                 return ClassificationReturnValue(
                     productName = "SKYR Piatnica",
                     classificationValue = maxScore,
-                    productId = 1
+                    productDetailsId = 1
                 )
             } else {
                 return ClassificationReturnValue(
                     productName = "Możliwe: SKYR Piatnica",
                     classificationValue = maxScore,
-                    productId = 1
+                    productDetailsId = 1
                 )
             }
         }
@@ -62,13 +62,13 @@ fun classifyImage2(bitmap: Bitmap, modelFile: File): ClassificationReturnValue? 
                 return ClassificationReturnValue(
                     productName = "Wiejski Piatnica",
                     classificationValue = maxScore,
-                    productId = 2
+                    productDetailsId = 2
                 )
             } else {
                 return ClassificationReturnValue(
                     productName = "Możliwe: Wiejski Piatnica",
                     classificationValue = maxScore,
-                    productId = 2
+                    productDetailsId = 2
                 )
             }
         }

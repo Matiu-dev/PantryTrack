@@ -1,10 +1,8 @@
 package pl.matiu.pantrytrack.fragments.scannerFragment
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +11,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import pl.matiu.pantrytrack.api.ApiRepository
 import pl.matiu.pantrytrack.configuration.FlavorConfig
-import pl.matiu.pantrytrack.fragments.categoryFragment.CategoryFragmentDirections
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsEntity
 import pl.matiu.pantrytrack.productDatabase.productDetails.ProductDetailsRepository
 import pl.matiu.pantrytrack.productDatabase.scannedProductPhoto.ProductScannedEntity
@@ -34,6 +31,8 @@ class ProductScannerDialogViewModel @Inject constructor(
     private var _productDetails = MutableStateFlow<List<ProductDetailsEntity>>(emptyList())
     val productDetails = _productDetails.asStateFlow()
 
+    private var _targetQuantity = MutableStateFlow<Int?>(0)
+    val targetQuantity = _targetQuantity.asStateFlow()
     private val _modelFile = MutableStateFlow<File?>(null)
     val modelFile = _modelFile.asStateFlow()
 
@@ -45,6 +44,14 @@ class ProductScannerDialogViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _productDetails.value = productDetailsRepository.getProductDetails()
+            }
+        }
+    }
+
+    suspend fun updateTargetQuantity(productDetailsId: Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _targetQuantity.value = productScannedRepository.getProductByProductDetailsId(productDetailsId = productDetailsId)?.targetQuantity
             }
         }
     }
@@ -93,7 +100,7 @@ class ProductScannerDialogViewModel @Inject constructor(
     }
 
     suspend fun checkIfScannedProductExist(productScannedEntity: ProductScannedEntity): ProductScannedEntity? {
-        return productScannedRepository.getProductByName(productScannedName = productScannedEntity.categoryName)
+        return productScannedRepository.getProductByProductDetailsId(productDetailsId = productScannedEntity.productDetailsId)
     }
 
     fun loadModel(modelName: String, context: Context) {

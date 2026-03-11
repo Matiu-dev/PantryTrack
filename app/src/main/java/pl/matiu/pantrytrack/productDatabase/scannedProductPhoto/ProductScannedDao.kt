@@ -17,6 +17,8 @@ interface ProductScannedDao {
 
     @Query("SELECT * FROM scannedProducts WHERE productId =:productId")
     fun getProductByProductId(productId: Int): ProductScannedEntity?
+    @Query("SELECT * FROM scannedProducts WHERE productDetailsId =:productDetailsId")
+    fun getProductByProductDetailsId(productDetailsId: Int): ProductScannedEntity?
 
     @Insert
     fun addScannedProduct(product: ProductScannedEntity)

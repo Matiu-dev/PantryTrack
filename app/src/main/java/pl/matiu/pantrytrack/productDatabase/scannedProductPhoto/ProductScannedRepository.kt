@@ -20,6 +20,10 @@ class ProductScannedRepository @Inject constructor(val productScannedDao: Produc
         return productScannedDao.getProductByProductId(productId)
     }
 
+    suspend fun getProductByProductDetailsId(productDetailsId: Int): ProductScannedEntity? {
+        return productScannedDao.getProductByProductDetailsId(productDetailsId)
+    }
+
     suspend fun addProduct(product: ProductScannedEntity) {
         productScannedDao.addScannedProduct(product)
     }

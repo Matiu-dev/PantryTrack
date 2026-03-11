@@ -81,10 +81,22 @@ class ProductScannerDialogFragment(val myPhoto: Bitmap): DialogFragment() {
         }
 
         lifecycleScope.launch {
+            productScannerDialogViewModel.targetQuantity.collect { targetQuantity ->
+                if(targetQuantity == null) {
+                    binding.productPrefQuantityEditText.setText("1")
+                } else {
+                    binding.productPrefQuantityEditText.setText(targetQuantity.toString())
+                }
+
+            }
+        }
+
+        lifecycleScope.launch {
             productScannerDialogViewModel.modelFile.collect { file ->
                 file?.let {
-                    classifyImage2(myPhoto, modelFile = file)?.productId?.let {
+                    classifyImage2(myPhoto, modelFile = file)?.productDetailsId?.let {
                         binding.productCategorySpinner.setSelection(it)
+                        productScannerDialogViewModel.updateTargetQuantity(productDetailsId = it)
                     }
                 }
             }
