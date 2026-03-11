@@ -19,8 +19,8 @@ class ShoppingListAdapter(private var products: List<FirstFragmentProductModel>?
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val productName: TextView = view.findViewById(R.id.product_name)
-        val quantity: TextView = view.findViewById(R.id.product_quantity)
-        val targetQuantity: TextView = view.findViewById(R.id.product_target_quantity)
+        val missingNumberOfProducts: TextView = view.findViewById(R.id.missing_number_of_products)
+        val productQuantityToTargetQuantity: TextView = view.findViewById(R.id.product_quantity_to_target_quantity)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -33,8 +33,11 @@ class ShoppingListAdapter(private var products: List<FirstFragmentProductModel>?
     override fun getItemCount() = products?.size ?: 0
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.productName.text = products?.get(position)?.productName
-        viewHolder.quantity.text = products?.get(position)?.quantity.toString()
-        viewHolder.targetQuantity.text = products?.get(position)?.targetQuantity.toString()
+        val product = products?.get(position)
+        product?.let {
+            viewHolder.productName.text = it.productName
+            viewHolder.missingNumberOfProducts.text = (product.targetQuantity - product.quantity).toString()
+            viewHolder.productQuantityToTargetQuantity.text = "(${it.quantity}/${it.targetQuantity})"
+        }
     }
 }
